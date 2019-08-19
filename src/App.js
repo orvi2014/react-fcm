@@ -5,15 +5,16 @@ import { compose, lifecycle, withHandlers, withState } from "recompose";
 const renderNotification = (notification, i) => <li key={i}>{notification}</li>;
 
 const registerPushListener = pushNotification =>
-  navigator.serviceWorker.addEventListener("message", ({ data }) =>
+
+	navigator.serviceWorker.addEventListener("message", ({ data }) =>
     pushNotification(
-      data.data
-        ? data.data.message
-        : data["firebase-messaging-msg-data"].data.message
+      data.notification
+        ? data.notification.title
+        : data["firebase-messaging-msg-data"].notification.title
     )
   );
 
-const App = ({ token, notifications }) => (
+const App = ({ token, notifications, topics }) => (
 	<>
     <h1>React + Firebase Cloud Messaging (Push Notifications)</h1>
     <div>
@@ -24,6 +25,11 @@ const App = ({ token, notifications }) => (
       
       {notifications.map(renderNotification)}
     </ul>
+		Topic List:
+		<ul>
+			
+		</ul>
+		
   </>
 );
 
